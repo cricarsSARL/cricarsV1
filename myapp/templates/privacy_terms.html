@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Cricars - Privacy Policy & Terms of Service{% endblock %}
+
+{% block content %}
+<div class="container legal-container">
+    <h1 class="text-center mb-4">Privacy Policy & Terms of Use</h1>
+
+    <div class="legal-section">
+        <h2 class="section-heading h5">1. Introduction</h2>
+        <p>Welcome to Cricars. By using our platform, you agree to the Terms & Conditions and acknowledge our Privacy
+            Policy.</p>
+    </div>
+
+    <div class="legal-section">
+        <h2 class="section-heading h5">2. Information We Collect</h2>
+        <p>We collect personal info like name, email, phone number, and driver’s license when you sign up or rent/list a
+            car.</p>
+    </div>
+
+    <div class="legal-section">
+        <h2 class="section-heading h5">3. How We Use Your Data</h2>
+        <p>To enable bookings, verify users, and improve our platform. We don’t sell your data to third parties.</p>
+    </div>
+
+    <div class="legal-section">
+        <h2 class="section-heading h5">4. Cookies</h2>
+        <p>Cookies help remember preferences and analyze site usage. You can disable them via browser settings.</p>
+    </div>
+
+    <div class="legal-section">
+        <h2 class="section-heading h5">5. Booking Terms</h2>
+        <ul>
+            <li>You must provide valid information.</li>
+            <li>You're liable for any car damage during rental.</li>
+            <li>Bookings depend on host approval.</li>
+        </ul>
+    </div>
+
+    <div class="legal-section">
+        <h2 class="section-heading h5">6. Account Suspension</h2>
+        <p>We reserve the right to suspend accounts that violate policies or abuse the platform.</p>
+    </div>
+
+    <div class="legal-section">
+        <h2 class="section-heading h5">7. Updates</h2>
+        <p>This policy may change. Continued use implies acceptance of the updated terms.</p>
+    </div>
+
+    <div class="legal-section">
+        <h2 class="section-heading h5">8. Contact Us</h2>
+        <p>For any questions, reach out to <a href="mailto:support@cricars.com">support@cricars.com</a>.</p>
+    </div>
+
+    <div class="legal-footer text-center">
+        &copy; {{ current_year|default:"2025" }} Cricars. All rights reserved.
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,303 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Host Login - Cricars{% endblock %}
+
+{% block content %}
+<div class="auth-split-layout">
+    <!-- Left side - Image -->
+    <div class="auth-image host-login">
+        <img src="{% static 'images/hero-bg.jpg' %}" alt="Host Login Background">
+        <div class="auth-image-overlay">
+            <h2>Welcome Back Host!</h2>
+            <p>Access your dashboard and manage your cars</p>
+            <div class="feature-highlights mt-4">
+                <div class="feature-item">
+                    <i class="fas fa-car-alt"></i>
+                    <span>Manage Your Fleet</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Track Earnings</span>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Handle Bookings</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right side - Login Form -->
+    <div class="auth-form-container">
+        <div class="auth-form-wrapper">
+            <div class="auth-header">
+                <div class="auth-icon host-icon">
+                    <i class="fas fa-car-side"></i>
+                </div>
+                <h1>Welcome Back</h1>
+                <p>Sign in to your host account</p>
+            </div>
+
+            {% if messages %}
+            <div class="messages mb-4">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post" class="auth-form host-form">
+                {% csrf_token %}
+                <!-- Email Field -->
+                <div class="form-group mb-4">
+                    <div class="form-floating">
+                        {{ form.email }}
+                        <label for="{{ form.email.id_for_label }}">
+                            <i class="fas fa-envelope me-2"></i>Email Address
+                        </label>
+                    </div>
+                    {% if form.email.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.email.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group mb-4">
+                    <div class="form-floating">
+                        {{ form.password }}
+                        <label for="{{ form.password.id_for_label }}">
+                            <i class="fas fa-lock me-2"></i>Password
+                        </label>
+                    </div>
+                    {% if form.password.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.password.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Remember Me & Forgot Password -->
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    {{ form.non_field_errors }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %} <!-- Action Buttons -->
+                <div class="form-actions">
+                    <div class="action-buttons">
+                        <button type="submit" class="btn auth-button host-button w-100 mb-3">
+                            <i class="fas fa-sign-in-alt me-2"></i>Sign In
+                        </button>
+                        <div class="divider">
+                            <span>or</span>
+                        </div>
+                        <a href="{% url 'host_register' %}" class="btn btn-outline-primary w-100">
+                            <i class="fas fa-user-plus me-2"></i>Become a Host
+                        </a>
+                    </div>
+                    <div class="additional-links mt-4">
+                        <div class="social-login">
+                            <p class="text-muted text-center mb-3">Sign in with</p>
+                            <div class="social-buttons">
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="fab fa-google"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary">
+                                    <i class="fab fa-apple"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Additional Styles -->
+<style>
+    .auth-split-layout {
+        min-height: 100vh;
+        background: #f8f9fa;
+    }
+
+    .feature-highlights {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .feature-item {
+        text-align: center;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 1rem;
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+    }
+
+    .feature-item i {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .auth-form-wrapper {
+        background: white;
+        border-radius: 15px;
+        padding: 2.5rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-floating label i {
+        opacity: 0.7;
+    }
+
+    .auth-button.host-button {
+        padding: 0.8rem;
+        font-size: 1.1rem;
+        transition: all 0.3s ease;
+    }
+
+    .auth-button.host-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .forgot-password {
+        color: #6c757d;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s ease;
+    }
+
+    .forgot-password:hover {
+        color: var(--primary-red);
+    }
+
+    .btn-outline-primary {
+        border-width: 2px;
+        font-weight: 500;
+    }
+
+    /* Action Buttons Styling */
+    .action-buttons {
+        position: relative;
+        padding: 1rem 0;
+    }
+
+    .divider {
+        text-align: center;
+        margin: 1.5rem 0;
+        position: relative;
+    }
+
+    .divider::before,
+    .divider::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        width: calc(50% - 30px);
+        height: 1px;
+        background-color: #dee2e6;
+    }
+
+    .divider::before {
+        left: 0;
+    }
+
+    .divider::after {
+        right: 0;
+    }
+
+    .divider span {
+        background-color: white;
+        padding: 0 1rem;
+        color: #6c757d;
+        font-size: 0.9rem;
+    }
+
+    .social-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+    }
+
+    .social-buttons .btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+    }
+
+    .social-buttons .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .social-buttons .btn i {
+        font-size: 1.2rem;
+    }
+
+    .btn-outline-secondary {
+        border-color: #dee2e6;
+        color: #6c757d;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #f8f9fa;
+        border-color: #6c757d;
+        color: #343a40;
+    }
+
+    .auth-button.host-button,
+    .btn-outline-primary {
+        height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    @media (max-width: 768px) {
+        .auth-form-wrapper {
+            padding: 1.5rem;
+        }
+
+        .feature-highlights {
+            grid-template-columns: 1fr;
+        }
+
+        .social-buttons {
+            gap: 0.5rem;
+        }
+
+        .social-buttons .btn {
+            width: 40px;
+            height: 40px;
+        }
+    }
+</style>
+{% endblock %}

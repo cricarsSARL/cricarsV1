@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Become a Host - Cricars{% endblock %}
+
+{% block content %}
+<div class="host-page">
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Transform Your Car Into Income</h1>
+            <p class="hero-subtitle">Join thousands of successful hosts earning up to $1,500/month with their vehicles
+            </p>
+            <div class="hero-cta">
+                <a href="{% url 'host_register' %}" class="btn btn-light btn-lg me-3">Start Hosting</a>
+                <a href="#benefits" class="btn btn-outline-light btn-lg">Learn More</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <img src="{% static 'images/host-hero.jpg' %}" alt="Luxury car hosting">
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="stat-card">
+                <i class="fas fa-dollar-sign stat-icon"></i>
+                <div class="stat-number">1500</div>
+                <div class="stat-label">Average Monthly Earnings</div>
+                <div class="stat-trend">↑ 25% from last year</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-users stat-icon"></i>
+                <div class="stat-number">5000+</div>
+                <div class="stat-label">Active Hosts</div>
+                <div class="stat-trend">Growing community</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-car stat-icon"></i>
+                <div class="stat-number">8000+</div>
+                <div class="stat-label">Cars Listed</div>
+                <div class="stat-trend">↑ 30% this quarter</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star stat-icon"></i>
+                <div class="stat-number">4.8</div>
+                <div class="stat-label">Host Rating</div>
+                <div class="stat-trend">Based on 10k+ reviews</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-handshake stat-icon"></i>
+                <div class="stat-number">15K+</div>
+                <div class="stat-label">Successful Rentals</div>
+                <div class="stat-trend">Monthly</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-globe stat-icon"></i>
+                <div class="stat-number">20+</div>
+                <div class="stat-label">Cities Covered</div>
+                <div class="stat-trend">Expanding rapidly</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="benefits" class="benefits-section">
+        <h2 class="text-center mb-5">Why Host with Cricars?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3>Extra Income</h3>
+                <p>Earn up to $1,500 monthly with your vehicle</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Full Insurance</h3>
+                <p>Complete coverage for peace of mind</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3>Flexible Schedule</h3>
+                <p>You control when to rent your car</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3>24/7 Support</h3>
+                <p>Dedicated host support team</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Growth Tools</h3>
+                <p>Analytics and optimization tools</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <h3>Verified Renters</h3>
+                <p>Pre-screened and trusted customers</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="mb-4">Ready to Start Earning?</h2>
+            <p class="mb-5">Join our community of successful hosts today</p>
+            <a href="{% url 'host_register' %}" class="btn btn-light btn-lg">Become a Host</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

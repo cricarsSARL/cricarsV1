@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Host Registration - Cricars{% endblock %}
+
+{% block content %}
+<div class="auth-split-layout">
+    <div class="auth-image host-registration">
+        <img src="{% static 'images/hero-bg.jpg' %}" alt="Host Registration Background">
+        <div class="auth-image-overlay">
+            <h2>Join Our Host Community</h2>
+            <p>Share your cars and start earning today</p>
+        </div>
+    </div>
+    <div class="auth-form-container">
+        <div class="auth-form-wrapper">
+            <div class="auth-header">
+                <div class="auth-icon host-icon">
+                    <i class="fas fa-car-side"></i>
+                </div>
+                <h1>Become a Host</h1>
+                <p>Start your journey as a car host on our platform</p>
+            </div>
+
+            <form method="post" class="auth-form host-form">
+                {% csrf_token %}
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            {{ form.first_name }}
+                            <label for="{{ form.first_name.id_for_label }}">First Name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            {{ form.last_name }}
+                            <label for="{{ form.last_name.id_for_label }}">Last Name</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-floating">
+                        {{ form.email }}
+                        <label for="{{ form.email.id_for_label }}">Email Address</label>
+                    </div>
+                    {% if form.email.errors %}
+                    <div class="invalid-feedback d-block">
+                        {{ form.email.errors }}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-floating">
+                        {{ form.phone_number }}
+                        <label for="{{ form.phone_number.id_for_label }}">Phone Number</label>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="form-floating">
+                        {{ form.company_name }}
+                        <label for="{{ form.company_name.id_for_label }}">Company Name</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            {{ form.password }}
+                            <label for="{{ form.password.id_for_label }}">Password</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="form-floating">
+                            {{ form.confirm_password }}
+                            <label for="{{ form.confirm_password.id_for_label }}">Confirm Password</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="form-floating">
+                        {{ form.additional_info }}
+                        <label for="{{ form.additional_info.id_for_label }}">Additional Information</label>
+                    </div>
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger">
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+
+                <div class="form-actions">
+                    <button type="submit" class="btn auth-button host-button w-100">
+                        <i class="fas fa-user-plus me-2"></i>Register as Host
+                    </button>
+                    <p class="mt-3 text-center">
+                        Already have an account?
+                        <a href="{% url 'host_login' %}" class="btn-link">Login here</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

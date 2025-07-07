@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="profile-wrapper">
+    <div class="profile-header">
+        <div class="profile-cover"></div>
+        <div class="profile-header-content">
+            <div class="profile-avatar">
+                {% if user.profile_picture %}
+                <img src="{{ user.profile_picture.url }}" alt="Profile">
+                {% else %}
+                <div class="avatar-placeholder">
+                    <i class="fas fa-user"></i>
+                </div>
+                {% endif %}
+            </div>
+            <div class="profile-info">
+                <h1>{{ user.first_name }} {{ user.last_name }}</h1>
+                <p>{% if user.is_host %}Host{% else %}Guest{% endif %} since {{ user.date_joined|date:"F Y" }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="profile-content">
+        <div class="profile-sidebar">
+            <div class="sidebar-section">
+                <h3><i class="fas fa-address-card"></i> Contact Information</h3>
+                <ul class="contact-list">
+                    <li title="Email Address">
+                        <i class="fas fa-envelope"></i>
+                        <span>{{ user.email }}</span>
+                    </li>
+                    <li title="Phone Number">
+                        <i class="fas fa-phone-alt"></i>
+                        <span>{{ user.phone|default:"Not provided" }}</span>
+                    </li>
+                </ul>
+            </div>
+            {% if user.is_host %}
+            <div class="sidebar-section">
+                <h3><i class="fas fa-shield-alt"></i> Verification Status</h3>
+                <div class="verification-badges">
+                    <span class="badge {% if user.host.id_verification %}verified{% else %}pending{% endif %}"
+                        title="{% if user.host.id_verification %}Verified on {{ user.host.verification_date|date:'M d, Y' }}{% else %}Verification pending{% endif %}">
+                        <i class="fas fa-id-card"></i>
+                        <span>ID {{ user.host.id_verification|yesno:"Verified,Pending" }}</span>
+                    </span>
+                    <span class="badge {% if user.host.account_verified %}verified{% else %}pending{% endif %}"
+                        title="{% if user.host.account_verified %}Account verified{% else %}Verification in progress{% endif %}">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Account {{ user.host.account_verified|yesno:"Verified,Pending" }}</span>
+                    </span>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="profile-main">
+            {% if user.is_host %}
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-dollar-sign"></i></div>
+                    <div class="stat-value">${{ user.host.total_earnings }}</div>
+                    <div class="stat-label">Total Earnings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-car"></i></div>
+                    <div class="stat-value">{{ user.host.total_cars }}</div>
+                    <div class="stat-label">Cars Listed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="stat-value">{{ user.host.total_bookings }}</div>
+                    <div class="stat-label">Total Bookings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon"><i class="fas fa-star"></i></div>
+                    <div class="stat-value">{{ user.host.rating|default:"N/A" }}</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+
+            <div class="actions-section">
+                <a href="{% url 'addcar' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add New Car
+                </a>
+                <a href="mailto:support@cricars.com" class="btn btn-outline">
+                    <i class="fas fa-envelope"></i> Contact Support
+                </a>
+            </div>
+            {% else %}
+            <div class="guest-dashboard">
+                <div class="dashboard-header">
+                    <h2>My Bookings</h2>
+                    <a href="{% url 'car_listing' %}" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Find a Car
+                    </a>
+                </div>
+                <div class="booking-history">
+                    {% if user.guest.bookings.all %}
+                    {% for booking in user.guest.bookings.all %}
+                    <div class="booking-card">
+                        <div class="booking-status {{ booking.status|lower }}">
+                            {{ booking.get_status_display }}
+                        </div>
+                        <div class="booking-details">
+                            <div class="car-info">
+                                <h3>{{ booking.car.year }} {{ booking.car.make }} {{ booking.car.model }}</h3>
+                                <p class="dates">
+                                    <i class="fas fa-calendar"></i>
+                                    {{ booking.start_date|date:"M d" }} - {{ booking.end_date|date:"M d, Y" }}
+                                </p>
+                            </div>
+                            <div class="booking-meta">
+                                <span class="price">${{ booking.total_amount }}</span>
+                                {% if booking.status == 'P' %}
+                                <button class="btn btn-sm btn-outline-danger">Cancel</button>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="empty-state">
+                        <i class="fas fa-calendar-alt"></i>
+                        <p>No bookings yet</p>
+                        <a href="{% url 'car_listing' %}" class="btn btn-primary">Browse Cars</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

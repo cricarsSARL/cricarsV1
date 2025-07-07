@@ -1,0 +1,329 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Add New Car{% endblock %}
+
+{% block content %}
+<div class="addcar-section">
+    <div class="addcar-header">
+        <div class="container">
+            <h1>Add Your Car</h1>
+            <p>Share your vehicle with our community</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="addcar-container">
+            {% if messages %}
+            <div class="messages mb-4">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            {% if form.errors %}
+            <div class="alert alert-danger">
+                <h4>Please correct the following errors:</h4>
+                {% for field in form %}
+                {% for error in field.errors %}
+                <p>{{ field.label }}: {{ error }}</p>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="POST" action="{% url 'addcar' %}" class="addcar-form" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-section">
+                    <h3>Car Details</h3>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="form-floating"> <select id="mark" name="mark" class="form-select" required>
+                                    <option value="">Select Make</option>
+                                </select>
+                                <label for="mark"><i class="fas fa-car me-2"></i>Make</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select id="model" name="model" class="form-select" required>
+                                    <option value="">Select Model</option>
+                                </select>
+                                <label for="model"><i class="fas fa-car-side me-2"></i>Model</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating"> <select id="year" name="year" class="form-select" required>
+                                    <option value="">Select Year</option>
+                                    {% for year in years %}
+                                    <option value="{{ year }}">{{ year }}</option>
+                                    {% endfor %}
+                                </select>
+                                <label for="year"><i class="fas fa-calendar me-2"></i>Year (2000 or later)</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Specifications</h3>
+                    <div class="row g-4">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="transmission" name="transmission" required>
+                                    <option value="">Select Type</option>
+                                    <option value="manual">Manual</option>
+                                    <option value="automatic">Automatic</option>
+                                </select>
+                                <label for="transmission"><i class="fas fa-cog me-2"></i>Transmission</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="fuel_type" name="fuel_type" required>
+                                    <option value="">Select Type</option>
+                                    <option value="petrol">Petrol</option>
+                                    <option value="diesel">Diesel</option>
+                                    <option value="electric">Electric</option>
+                                </select>
+                                <label for="fuel_type"><i class="fas fa-gas-pump me-2"></i>Fuel Type</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="location" name="location" required>
+                                    <option value="">Select City</option>
+                                    <option value="Casablanca">Casablanca</option>
+                                    <option value="Rabat">Rabat</option>
+                                    <option value="Marrakech">Marrakech</option>
+                                    <option value="Fes">Fes</option>
+                                    <option value="Tangier">Tangier</option>
+                                </select>
+                                <label for="location"><i class="fas fa-map-marker-alt me-2"></i>Location</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="color" name="color" required>
+                                <label for="color"><i class="fas fa-palette me-2"></i>Color</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="number_of_doors" name="number_of_doors"
+                                    min="2" max="5" required>
+                                <label for="number_of_doors"><i class="fas fa-door-open me-2"></i>Number of
+                                    Doors</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating"> <input type="number" class="form-control" id="engine_capacity"
+                                    name="engine_capacity" step="0.001" min="0.1" required>
+                                <label for="engine_capacity"><i class="fas fa-engine me-2"></i>Engine Capacity
+                                    (L)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating"> <input type="number" class="form-control" id="mileage"
+                                    name="mileage" min="0" max="300000" required>
+                                <label for="mileage"><i class="fas fa-road me-2"></i>Mileage (km)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="registration_number"
+                                    name="registration_number" required>
+                                <label for="registration_number"><i class="fas fa-id-card me-2"></i>Registration
+                                    Number</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="date" class="form-control" id="last_maintenance_date"
+                                    name="last_maintenance_date">
+                                <label for="last_maintenance_date"><i class="fas fa-wrench me-2"></i>Last Maintenance
+                                    Date</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check mt-4">
+                                <input type="checkbox" class="form-check-input" id="air_conditioning"
+                                    name="air_conditioning" checked>
+                                <label class="form-check-label" for="air_conditioning">
+                                    <i class="fas fa-snowflake me-2"></i>Air Conditioning
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check mt-4">
+                                <input type="checkbox" class="form-check-input" id="has_gps" name="has_gps">
+                                <label class="form-check-label" for="has_gps">
+                                    <i class="fas fa-satellite-dish me-2"></i>GPS Navigation
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="number_of_seats" name="number_of_seats"
+                                    min="1" max="9" required>
+                                <label for="number_of_seats"><i class="fas fa-chair me-2"></i>Number of Seats</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" id="pricePerDay" name="pricePerDay" min="201"
+                                    required>
+                                <label for="pricePerDay"><i class="fas fa-money-bill me-2"></i>Price per Day</label>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="availability_status" name="availability_status"
+                                    required>
+                                    <option value="">Select Status</option>
+                                    <option value="available">Available</option>
+                                    <option value="rented">Rented</option>
+                                    <option value="maintenance">Under Maintenance</option>
+                                </select>
+                                <label for="availability_status"><i class="fas fa-check-circle me-2"></i>Availability
+                                    Status</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="insurance_info" name="insurance_info"
+                                    style="height: 100px"></textarea>
+                                <label for="insurance_info"><i class="fas fa-shield-alt me-2"></i>Insurance
+                                    Information</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>Description & Photos</h3>
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <textarea class="form-control" id="description" name="description" style="height: 120px"
+                                    required></textarea>
+                                <label for="description"><i class="fas fa-align-left me-2"></i>Car Description</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="photo-upload-container">
+                                <label class="photo-upload-label">
+                                    <i class="fas fa-camera"></i>
+                                    <span>Upload Photos</span> <input type="file" class="form-control" id="image"
+                                        name="image" accept="image/*">
+                                </label>
+                                <div id="preview-container" class="photo-preview-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus-circle me-2"></i>Add Car
+                    </button>
+                    <a href="{% url 'car_listing' %}" class="btn btn-outline-secondary btn-lg">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/car-data.js' %}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const makeSelect = document.getElementById('mark');
+        const modelSelect = document.getElementById('model');
+        const yearSelect = document.getElementById('year');
+
+        // Initialize dropdowns
+        function initializeDropdowns() {
+            // Clear and set default options
+            makeSelect.innerHTML = '<option value="">Select Make</option>';
+            modelSelect.innerHTML = '<option value="">Select Model</option>';
+            yearSelect.innerHTML = '<option value="">Select Year</option>';
+
+            // Disable model and year initially
+            modelSelect.disabled = true;
+            yearSelect.disabled = true;
+
+            // Add car makes to the make select
+            for (let make in carData) {
+                makeSelect.options[makeSelect.options.length] = new Option(make, make);
+            }
+        }
+
+        // Handle make selection
+        makeSelect.addEventListener('change', function () {
+            // Reset and disable dependent dropdowns
+            modelSelect.innerHTML = '<option value="">Select Model</option>';
+            yearSelect.innerHTML = '<option value="">Select Year</option>';
+
+            if (this.value) {
+                // Enable and populate model dropdown
+                modelSelect.disabled = false;
+                const models = carData[this.value].models;
+                models.forEach(model => {
+                    modelSelect.options[modelSelect.options.length] = new Option(model, model);
+                });
+            } else {
+                modelSelect.disabled = true;
+                yearSelect.disabled = true;
+            }
+        });
+
+        // Handle model selection
+        modelSelect.addEventListener('change', function () {
+            yearSelect.innerHTML = '<option value="">Select Year</option>';
+
+            if (this.value) {
+                // Enable and populate year dropdown
+                yearSelect.disabled = false;
+                const years = carData[makeSelect.value].years;
+                years.forEach(year => {
+                    yearSelect.options[yearSelect.options.length] = new Option(year, year);
+                });
+            } else {
+                yearSelect.disabled = true;
+            }
+        });
+
+        // Initialize the dropdowns
+        initializeDropdowns();
+
+        // Photo preview functionality
+        document.getElementById('image').addEventListener('change', function (e) {
+            const preview = document.getElementById('preview-container');
+            preview.innerHTML = '';
+
+            [...e.target.files].forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const div = document.createElement('div');
+                    div.className = 'preview-item';
+                    div.innerHTML = `
+                <img src="${e.target.result}" alt="Preview">
+                <span class="preview-filename">${file.name}</span>
+            `;
+                    preview.appendChild(div);
+                }
+                reader.readAsDataURL(file);
+            });
+        });
+    });
+</script>
+{% endblock %}
