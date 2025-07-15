@@ -102,7 +102,7 @@
                     <img src="{% static 'images/brands/Audi-Logo.png' %}" alt="Audi" class="img-fluid">
                     <span class="brand-name">Audi</span>
                 </div>
-                
+
             </div>
             <div class="brand-item">
                 <div class="brand-logo">
@@ -238,35 +238,6 @@
         </div>
     </div>
 </section>
-<!-- End features section -->
-
-<!-- uncomment after deployed 
-<section class="py-5">
-    <div class="container">
-        <h2 class="text-center mb-4">Featured Cars</h2>
-        <div class="row g-4">
-            {% for car in cars|slice:":6" %}
-            <div class="col-md-4">
-                <div class="card h-100">
-                    {% if car.car_photos %}
-                    <img src="{{ car.car_photos.0 }}" class="card-img-top" alt="{{ car.make }} {{ car.model }}">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{ car.make }} {{ car.model }}</h5>
-                        <p class="card-text">
-                            <i class="fas fa-map-marker-alt me-2"></i>{{ car.location }}<br>
-                            <i class="fas fa-calendar me-2"></i>{{ car.year }}<br>
-                            <i class="fas fa-dollar-sign me-2"></i>{{ car.price_per_day }}/day
-                        </p>
-                        <a href="{% url 'car_listing' %}?id={{ car.id }}" class="btn btn-primary">View Details</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
--->
 
 <section class="py-5">
     <div class="map-section">
