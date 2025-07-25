@@ -1,7 +1,8 @@
 from dotenv import load_dotenv
 from pathlib import Path
-import os
 import dj_database_url
+import environ
+import os
 
 load_dotenv()
 
@@ -68,20 +69,16 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 
 # DATABASE_URL
 
-# Use PostgreSQL in production (Railway), SQLite in development
-if 'DATABASE_URL' in os.environ:
-    DATABASES = {
-        'default': dj_database_url.parse(os.environ['DATABASE_URL'])
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
     }
-else:
-    # Local development with SQLite
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-    
+}
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
