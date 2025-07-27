@@ -1,3 +1,4 @@
+from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
 from pathlib import Path
 import dj_database_url
@@ -12,10 +13,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG') == 'True'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://web-production-0495.up.railway.app',
-    'https://cricars.online',
-]
+
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    "CSRF_TRUSTED_ORIGINS", "http://127.0.0.1").split(",")
+
 
 # Apps
 INSTALLED_APPS = [
@@ -67,15 +68,22 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
-# Database
+
+def get_env_variable(var_name):
+    value = os.environ.get(var_name)
+    if value is None:
+        raise ImproperlyConfigured(f"Set the {var_name} environment variable")
+    return value
+
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_DATABASE'),
-        'USER': os.environ.get('MYSQLUSER'),
-        'PASSWORD': os.environ.get('MYSQLPASSWORD'),
-        'HOST': os.environ.get('MYSQLHOST'),
-        'PORT': os.environ.get('MYSQLPORT'),
+        'NAME': get_env_variable('MYSQL_DATABASE'),
+        'USER': get_env_variable('MYSQLUSER'),
+        'PASSWORD': get_env_variable('MYSQLPASSWORD'),
+        'HOST': get_env_variable('MYSQLHOST'),
+        'PORT': get_env_variable('MYSQLPORT'),
     }
 }
 
