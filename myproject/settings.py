@@ -68,7 +68,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'myproject.wsgi.application'
 
 # Database
-DATABASES_URL = os.getenv('DATABASE_URL')
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
