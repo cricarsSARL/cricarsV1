@@ -9,13 +9,23 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.getenv('SECRET_KEY')
-DEBUG = os.getenv('DEBUG') == 'True'
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(',')
+SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-development-key')
+DEBUG = True  # Enable debug mode for development
 
+# Allow all hosts in development
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
-CSRF_TRUSTED_ORIGINS = os.getenv(
-    "CSRF_TRUSTED_ORIGINS", "http://127.0.0.1").split(",")
+# CSRF settings
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+    'https://web-production-0495.up.railway.app',
+    'https://cricars.online'
+]
+
+# CSRF settings for development
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
 
 
 # Apps
@@ -36,6 +46,28 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Debug logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'debug.log',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console', 'file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
 
 # MIDDLEWARE
 MIDDLEWARE = [
@@ -76,16 +108,25 @@ def get_env_variable(var_name):
     return value
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': get_env_variable('MYSQL_DATABASE'),
-        'USER': get_env_variable('MYSQLUSER'),
-        'PASSWORD': get_env_variable('MYSQLPASSWORD'),
-        'HOST': get_env_variable('MYSQLHOST'),
-        'PORT': get_env_variable('MYSQLPORT'),
+# Database configuration with fallback to SQLite for development
+if DEBUG:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': get_env_variable('MYSQL_DATABASE'),
+            'USER': get_env_variable('MYSQLUSER'),
+            'PASSWORD': get_env_variable('MYSQLPASSWORD'),
+            'HOST': get_env_variable('MYSQLHOST'),
+            'PORT': get_env_variable('MYSQLPORT'),
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
