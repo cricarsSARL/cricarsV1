@@ -1,11 +1,13 @@
 # Cricars - Premium Car Rental Platform
 
 ## Overview
+
 Cricars is a modern, full-featured car rental platform built with Django. It enables users to rent cars and hosts to list their vehicles, creating a seamless car-sharing experience.
 
 ## Features
 
 ### For Renters
+
 - User registration and authentication
 - Email verification system
 - Browse available cars with detailed information
@@ -15,6 +17,7 @@ Cricars is a modern, full-featured car rental platform built with Django. It ena
 - Profile management
 
 ### For Hosts
+
 - Host registration and verification
 - List and manage vehicles
 - Upload car images and details
@@ -23,6 +26,7 @@ Cricars is a modern, full-featured car rental platform built with Django. It ena
 - Manage host profile
 
 ### General Features
+
 - Responsive design for all devices
 - Secure authentication system
 - Email notifications
@@ -42,23 +46,27 @@ Cricars is a modern, full-featured car rental platform built with Django. It ena
 ## Setup and Installation
 
 1. Clone the repository
+
 ```bash
 git clone https://github.com/cricarsSARL/cricarsV1.git
 cd cricarsV1
 ```
 
 2. Create and activate a virtual environment
+
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
 3. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 4. Set up environment variables (.env)
+
 ```env
 SECRET_KEY=your_secret_key
 DEBUG=True
@@ -73,21 +81,25 @@ MYSQLPORT=your_db_port
 ```
 
 5. Run migrations
+
 ```bash
 python manage.py migrate
 ```
 
 6. Create a superuser
+
 ```bash
 python manage.py createsuperuser
 ```
 
 7. Run the development server
+
 ```bash
 python manage.py runserver
 ```
 
 ## Project Structure
+
 ```
 cricarsV1/
 ├── myapp/                 # Main application directory
