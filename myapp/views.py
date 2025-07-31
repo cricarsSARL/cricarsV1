@@ -1,7 +1,6 @@
-from django.db import connection
+# in views.py
 from django.http import JsonResponse
-from django.http import Http404
-from django.core.validators import validate_email
+from django.db import connection
 from django.utils.encoding import force_str
 from django.shortcuts import get_object_or_404, redirect, render
 from typing import Dict, Any
@@ -35,9 +34,6 @@ MOROCCAN_CITIES = [
 ]
 
 
-# in views.py
-
-
 def db_debug(request):
     return JsonResponse({
         'vendor': connection.vendor,
@@ -47,8 +43,6 @@ def db_debug(request):
         'port': connection.settings_dict.get('PORT'),
         'name': connection.settings_dict.get('NAME'),
     })
-
-
 # Home page view with car search functionality.
 
 
@@ -75,8 +69,8 @@ def home(request: HttpRequest) -> Any:
     }
     return render(request, 'home.html', context)
 
-# Login view for user authentication.
 
+# Login view for user authentication.
 
 def login(request):
     """Handle user login."""
