@@ -120,9 +120,11 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
+            # 'URL' is used for dj_database_url, but here we use direct settings
+            'URL': get_env_variable('DATABASE_URL'),
             'NAME': get_env_variable('MYSQL_DATABASE'),
             'USER': get_env_variable('MYSQLUSER'),
-            'PASSWORD': get_env_variable('MYSQLPASSWORD'),
+            'PASSWORD': get_env_variable('MYSQL_ROOT_PASSWORD'),
             'HOST': get_env_variable('MYSQLHOST'),
             'PORT': get_env_variable('MYSQLPORT'),
         }

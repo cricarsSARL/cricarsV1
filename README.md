@@ -75,7 +75,7 @@ EMAIL_HOST_USER=your_email@gmail.com
 EMAIL_HOST_PASSWORD=your_app_password
 MYSQL_DATABASE=your_db_name
 MYSQLUSER=your_db_user
-MYSQLPASSWORD=your_db_password
+MYSQL_ROOT_PASSWORD=your_db_password
 MYSQLHOST=your_db_host
 MYSQLPORT=your_db_port
 ```
