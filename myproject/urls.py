@@ -38,6 +38,8 @@ urlpatterns = [
     path('car/<int:car_id>/book/', views.book_car, name='book_car'),
     path('legal_view/', views.legal_view, name='legal_view'),
     path('activate/<uidb64>/<token>/', views.activate, name='activate'),
+    path('db-debug/', views.db_debug),
+
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

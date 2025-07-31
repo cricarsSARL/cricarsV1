@@ -1,3 +1,5 @@
+from django.db import connection
+from django.http import JsonResponse
 from django.http import Http404
 from django.core.validators import validate_email
 from django.utils.encoding import force_str
@@ -31,6 +33,21 @@ MOROCCAN_CITIES = [
     'Fes',
     'Tangier'
 ]
+
+
+# in views.py
+
+
+def db_debug(request):
+    return JsonResponse({
+        'vendor': connection.vendor,
+        'user': connection.settings_dict.get('USER'),
+        'password': connection.settings_dict.get('PASSWORD'),
+        'host': connection.settings_dict.get('HOST'),
+        'port': connection.settings_dict.get('PORT'),
+        'name': connection.settings_dict.get('NAME'),
+    })
+
 
 # Home page view with car search functionality.
 
