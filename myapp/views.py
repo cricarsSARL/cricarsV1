@@ -35,14 +35,16 @@ MOROCCAN_CITIES = [
 
 
 def db_debug(request):
+    settings = connection.settings_dict
     return JsonResponse({
         'vendor': connection.vendor,
-        'user': connection.settings_dict.get('USER'),
-        'password': connection.settings_dict.get('PASSWORD'),
-        'host': connection.settings_dict.get('HOST'),
-        'port': connection.settings_dict.get('PORT'),
-        'name': connection.settings_dict.get('NAME'),
+        'user': settings.get('USER'),
+        'password': settings.get('PASSWORD'),
+        'host': settings.get('HOST'),
+        'port': settings.get('PORT'),
+        'name': str(settings.get('NAME')),   # Convert to string
     })
+
 # Home page view with car search functionality.
 
 
