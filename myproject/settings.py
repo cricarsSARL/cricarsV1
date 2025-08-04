@@ -5,6 +5,10 @@ import os
 
 load_dotenv()
 
+# Configure PyMySQL as MySQL driver
+import pymysql
+pymysql.install_as_MySQLdb()
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv('SECRET_KEY')
